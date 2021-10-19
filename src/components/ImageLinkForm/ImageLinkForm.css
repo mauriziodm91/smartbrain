@@ -11,4 +11,9 @@
     background-color: #e5e5f7;
     background-size: 10px 10px;
     background-image: repeating-linear-gradient(45deg, #444cf7 0, #444cf7 1px, #e5e5f7 0, #e5e5f7 50%);
+
+}
+
+p{
+    color: #fff;
 }
