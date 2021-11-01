@@ -7,7 +7,6 @@ import Register from './components/Register/Register';
 import Signin from './components/Signin/Signin';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import Clarifai from 'clarifai';
 import './App.css';
 const Options = {
   "particles": {
@@ -120,10 +119,6 @@ const Options = {
   "retina_detect": true
 };
 
-const app = new Clarifai.App({
-  apiKey: '38edc60f1ac5429cae47ab27ee04f417'
- });
-
 const initialState = {
   input: '',
   imageUrl: '',
@@ -178,9 +173,15 @@ class App extends Component{
   }
 
   onButtonSubmit= ()=>{
-    this.setState({imageUrl: this.state.input});
-    app.models
-    .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    this.setState({imageUrl: this.state.input})
+      fetch('http://localhost:3000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+      .then(response => response.json())
       .then(response => {
         if(response){
           fetch('http://localhost:3000/image', {
